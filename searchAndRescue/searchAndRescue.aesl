@@ -6,6 +6,11 @@
 
 
 <!--list of constants-->
+<constant value="300" name="SPEED"/>
+<constant value="0" name="STOPPED"/>
+<constant value="1" name="FORWARD"/>
+<constant value="2" name="BLOCK"/>
+<constant value="3" name="TURN"/>
 
 
 <!--show keywords state-->
@@ -13,8 +18,40 @@
 
 
 <!--node thymio-II-->
-<node nodeId="1" name="thymio-II">
-</node>
+<node nodeId="1" name="thymio-II">var state = STOPPED
+var firstScan[6] = [0, 0, 0, 0, 0, 0]
+var location[8] = [2, 2, 2, 2, 2, 2, 2, 2]
+var dummy
+
+onevent button.backward
+	state = STOPPED
+	motor.left.target = 0
+	motor.right.target = 0
+	
+onevent button.right
+	if firstScan[0] == 0 then 
+		callsub scan
+	end
+
+onevent button.forward
+	#Something
+	
+sub scan
+	if firstScan[0] == 0 then
+		#Adds values to the firstScan array
+	else
+		#Scans and checks if it matches with the saved data.
+		if  dummy == firstScan[0] then
+			callsub returnHome
+		end
+	end
+	
+sub localize
+	#Finds where it is.
+
+sub returnHome
+	#Turns around and goes home.
+	#Displays the location and the colour</node>
 
 
 </network>
